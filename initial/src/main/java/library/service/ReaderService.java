@@ -1,15 +1,13 @@
 package library.service;
 
+import library.Exception.ReaderNotFoundException;
 import library.domain.Reader;
 import library.repository.ReaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 @Service
 public class ReaderService {
@@ -21,6 +19,10 @@ public class ReaderService {
         this.readerRepository = customerRepository;
     }
 
+    public void addReader(String firstName, String lastName){
+        readerRepository.save(new Reader(firstName,lastName));
+    }
+
     public List<Reader> getByName(String name) {
         List<Reader> firstNames = readerRepository.findByFirstName(name);
         List<Reader> lastNames = readerRepository.findByLastName(name);
@@ -30,7 +32,27 @@ public class ReaderService {
         return firstNames;
     }
 
-    public List<Reader> getByDateOfBirth(Date dateOfbirth){
-        return readerRepository.findByDateOfBirth(dateOfbirth);
+    public Optional<Reader> getByID(String userId){
+        return readerRepository.findById(userId);
+    }
+
+    public void updateReader(String userID, String name) throws ReaderNotFoundException {
+        Optional<Reader> readerToBeUpdated = getByID(userID);
+        if (readerToBeUpdated.isPresent()) {
+            Reader reader = readerToBeUpdated.get();
+            reader.setLastName(name);
+            readerRepository.save(reader);
+        }
+        else {
+            throw new ReaderNotFoundException("Reader is not present");
+        }
+    }
+
+    public void removeReader(String userId) {
+        readerRepository.deleteById(userId);
+    }
+
+    public boolean isValidReader(String memberId) {
+        return readerRepository.existsById(memberId);
     }
 }

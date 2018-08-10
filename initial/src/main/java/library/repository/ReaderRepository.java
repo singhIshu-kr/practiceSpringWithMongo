@@ -12,5 +12,5 @@ public interface ReaderRepository extends MongoRepository<Reader, String> {
 
     List<Reader> findByLastName(String lastName);
 
-    List<Reader> findByDateOfBirth(Date dateOfBirth);
+    void deleteById(String userId);
 }
