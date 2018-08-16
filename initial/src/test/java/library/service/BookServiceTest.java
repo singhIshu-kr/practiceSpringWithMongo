@@ -38,7 +38,7 @@ public class BookServiceTest {
     @Test
     public void shouldReturnBookWhenBookIsPresent() {
         Book java = new Book("Java","VK");
-        when(bookRepository.findByName("Java")).thenReturn(Collections.singletonList(java));
+        when(bookRepository.findByTitle("Java")).thenReturn(Collections.singletonList(java));
         List<Book> books = bookService.getByName("Java");
         assertEquals(books.size(),1);
     }

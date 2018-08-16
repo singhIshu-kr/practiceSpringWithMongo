@@ -31,23 +31,34 @@ public class ReaderController {
     }
 
     @GetMapping("/id/{id}")
-    public Optional<Reader> getUserById(@PathVariable String id){
-        return readerService.getByID(id);
+    public Optional<Reader> getUserById(@PathVariable String id) throws ReaderNotFoundException {
+        try {
+            return readerService.getByID(id);
+        }catch (ReaderNotFoundException e){
+            return Optional.empty();
+        }
     }
 
     @PostMapping("/addReader")
-    public void addName(@RequestBody String firstName,@RequestBody String lastname){
+    public String addName(@RequestBody String firstName, @RequestBody String lastname){
         readerService.addReader(firstName,lastname);
+        return "Reader is successfully added";
     }
 
     @DeleteMapping("/delete")
-    public void deleteById(@RequestBody String userId) {
+    public String deleteById(@RequestBody String userId) {
         readerService.removeReader(userId);
+        return "Reader is deleted";
     }
 
     @PostMapping("/update")
-    public void updateReader(@RequestBody String userId,@RequestBody String lastName) throws ReaderNotFoundException {
-        readerService.updateReader(userId,lastName);
+    public String updateReader(@RequestBody String userId, @RequestBody String lastName) throws ReaderNotFoundException {
+        try {
+            readerService.updateReader(userId,lastName);
+            return "Successfully updated the lastName";
+        } catch (ReaderNotFoundException e) {
+            return e.getMessage();
+        }
     }
 }
 

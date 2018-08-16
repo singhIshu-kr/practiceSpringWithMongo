@@ -51,7 +51,7 @@ public class ReaderControllerTest {
     }
 
     @Test
-    public void shouldCallGetByIdFromTheReaderService() {
+    public void shouldCallGetByIdFromTheReaderService() throws ReaderNotFoundException {
         readerController.getUserById("12345");
         verify(readerService,times(1)).getByID("12345");
     }

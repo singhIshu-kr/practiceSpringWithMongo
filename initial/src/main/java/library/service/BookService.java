@@ -15,7 +15,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
     public List<Book> getByName(String name) {
-        return bookRepository.findByName(name);
+        return bookRepository.findByTitle(name);
     }
 
     public void removeBook(String isbnId) throws NoSuchBookFoundException {

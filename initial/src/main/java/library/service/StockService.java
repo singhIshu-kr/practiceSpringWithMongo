@@ -36,7 +36,7 @@ public class StockService {
     }
 
     public boolean isBookCopyAvailable(String bookID){
-        return stockRepository.findById(bookID).get().availability == true;
+        return stockRepository.findById(bookID).get().availability;
     }
 
     public void makeBookAvailable(String bookID) throws NoSuchCopyFoundException {

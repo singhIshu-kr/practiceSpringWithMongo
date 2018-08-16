@@ -1,10 +1,9 @@
 package library.repository;
 
-import java.util.Date;
-import java.util.List;
-
 import library.domain.Reader;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.List;
 
 public interface ReaderRepository extends MongoRepository<Reader, String> {
 

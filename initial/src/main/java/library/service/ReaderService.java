@@ -32,8 +32,13 @@ public class ReaderService {
         return firstNames;
     }
 
-    public Optional<Reader> getByID(String userId){
-        return readerRepository.findById(userId);
+    public Optional<Reader> getByID(String userId) throws ReaderNotFoundException {
+        if(readerRepository.findById(userId).isPresent()){
+            return readerRepository.findById(userId);
+        }
+        else {
+            throw new ReaderNotFoundException("Reader is not present");
+        }
     }
 
     public void updateReader(String userID, String name) throws ReaderNotFoundException {
